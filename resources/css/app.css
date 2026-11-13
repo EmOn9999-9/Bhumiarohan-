@@ -1,0 +1,131 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+/*
+|--------------------------------------------------------------------------
+| Brand theme
+|--------------------------------------------------------------------------
+| Placeholder colours until the logo is final. Change the "brand" scale
+| (and optionally "accent") here and the whole site + admin follows.
+*/
+@theme {
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+    /* Navy from the logo (#031a3e = brand-900) */
+    --color-brand-50: #f2f6fb;
+    --color-brand-100: #e1e9f4;
+    --color-brand-200: #c0d0e8;
+    --color-brand-300: #8fabd6;
+    --color-brand-400: #5279b3;
+    --color-brand-500: #2a5594;
+    --color-brand-600: #173b73;
+    --color-brand-700: #0a2552;
+    --color-brand-800: #061e47;
+    --color-brand-900: #031a3e;
+    --color-brand-950: #021230;
+
+    /* Gold from the logo roof */
+    --color-accent-400: #d9a026;
+    --color-accent-500: #c6841a;
+    --color-accent-600: #a8680f;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        -webkit-tap-highlight-color: transparent;
+    }
+    body {
+        @apply bg-white font-sans text-slate-700 antialiased;
+    }
+    h1, h2, h3, h4 {
+        @apply font-display text-slate-900 tracking-tight;
+    }
+    [x-cloak] { display: none !important; }
+}
+
+@layer components {
+    .container-x { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+    .section { @apply py-16 sm:py-24; }
+
+    .eyebrow {
+        @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-brand-600;
+    }
+    .eyebrow::before { content: ''; @apply h-px w-6 bg-current; }
+
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition
+               focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500 disabled:opacity-60;
+    }
+    .btn-primary { @apply bg-brand-700 text-white shadow-sm hover:bg-brand-800; }
+    .btn-accent { @apply bg-accent-500 text-slate-900 hover:bg-accent-400; }
+    .btn-outline { @apply border border-slate-300 bg-white text-slate-800 hover:border-brand-600 hover:text-brand-700; }
+    .btn-ghost-light { @apply border border-white/30 text-white hover:bg-white/10; }
+    .btn-danger { @apply bg-red-600 text-white hover:bg-red-700; }
+    .btn-sm { @apply px-3.5 py-1.5 text-xs; }
+
+    .card {
+        @apply rounded-2xl border border-slate-200 bg-white transition duration-300;
+    }
+    .card-hover { @apply hover:-translate-y-1 hover:border-brand-200 hover:shadow-xl hover:shadow-brand-900/5; }
+
+    .form-label { @apply mb-1.5 block text-sm font-medium text-slate-700; }
+    .form-input {
+        @apply block w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900
+               placeholder:text-slate-400 transition focus:border-brand-500 focus:ring-4 focus:ring-brand-100 focus:outline-none;
+    }
+    .form-error { @apply mt-1 text-xs text-red-600; }
+
+    .prose-body p { @apply mb-4 leading-relaxed last:mb-0; }
+
+    .pattern-grid {
+        background-image:
+            linear-gradient(to right, rgb(255 255 255 / 0.06) 1px, transparent 1px),
+            linear-gradient(to bottom, rgb(255 255 255 / 0.06) 1px, transparent 1px);
+        background-size: 48px 48px;
+    }
+}
+
+/* Hero entrance: content slides up from below on page load */
+.hero-rise {
+    opacity: 0;
+    animation: hero-rise 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--d, 0ms);
+}
+@keyframes hero-rise {
+    from { opacity: 0; transform: translateY(60px); }
+    to { opacity: 1; transform: none; }
+}
+
+/* Section & page titles: slide up from below when scrolled into view (class added by app.js) */
+.title-rise {
+    opacity: 0;
+    transform: translateY(48px);
+    transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.title-rise.is-visible { opacity: 1; transform: none; }
+
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .hero-rise { opacity: 1; animation: none; }
+    .title-rise { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+}
+
+/* Header: transparent over the dark hero, solid once scrolled or menu open */
+#site-header .nav-link { color: rgb(255 255 255 / 0.85); }
+#site-header .nav-link:hover, #site-header .nav-link.is-active { color: #fff; background: rgb(255 255 255 / 0.1); }
+#site-header:not(.is-solid) .logo-name { color: #fff; }
+#site-header:not(.is-solid) .logo-sub { color: rgb(255 255 255 / 0.6); }
+#site-header.is-solid .logo-mark-light { display: none; }
+#site-header.is-solid .logo-mark-color { display: block; }
+#site-header.is-solid { background: rgb(255 255 255 / 0.92); backdrop-filter: blur(12px); box-shadow: 0 1px 0 rgb(15 23 42 / 0.08), 0 8px 24px -12px rgb(15 23 42 / 0.12); }
+#site-header.is-solid .nav-link { color: var(--color-slate-700); }
+#site-header.is-solid .nav-link:hover { color: var(--color-brand-700); background: var(--color-slate-100); }
+#site-header.is-solid .nav-link.is-active { color: var(--color-brand-700); background: var(--color-brand-50); }
