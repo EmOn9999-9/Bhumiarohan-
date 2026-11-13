@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Bhumi Arohan: Company Website
 
 Laravel + Blade + Tailwind CSS v4 + vanilla JS, with an SQLite database.
@@ -23,3 +24,7 @@ From the panel you can manage projects (with photos), services, team members, an
 | "Registration in progress" note | set `COMPANY_REGISTRATION_PENDING=false` and `COMPANY_REGISTRATION_NO=...` in `.env` |
 | Home / About images | the `<x-media src="" ...>` placeholders in `resources/views/pages/home.blade.php` and `about.blade.php` |
 | Inquiry email notifications | set `COMPANY_INQUIRY_NOTIFY` and the `MAIL_*` settings in `.env` |
+=======
+# Bhumiarohan-
+Official website of Bhumi Arohan Engineering &amp; Construction Pvt. Ltd., Chitwan, Nepal. Built with Laravel, Tailwind CSS and vanilla JS: services, project portfolio, team, Nepali land unit converter, contact form with email notifications, and an admin panel.
+>>>>>>> e27a7364dc9cc1ac6cca07f3178c0f4e94225ac5
