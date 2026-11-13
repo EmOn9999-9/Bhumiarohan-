@@ -10,26 +10,42 @@ use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
+    /**
+     * Seed the initial content. Runs only on an empty database, so it is safe to run on
+     * every deploy without overwriting changes made in the admin panel.
+     */
     public function run(): void
     {
-        User::updateOrCreate(
-            ['email' => env('ADMIN_EMAIL', 'admin@bhumiarohan.com')],
-            [
-                'name' => 'Administrator',
-                'password' => env('ADMIN_PASSWORD', 'change-me-now'),
-            ]
-        );
+        if (User::exists()) {
+            $this->command?->info('Database already has data, skipping seed.');
 
-        TeamMember::firstOrCreate(
-            ['name' => 'Rohan Sharma Poudel'],
-            ['role' => 'Founder & Managing Director', 'sort_order' => 1, 'is_active' => true]
-        );
+            return;
+        }
+
+        $password = config('company.admin.password');
+        if (blank($password)) {
+            throw new \RuntimeException('Set ADMIN_PASSWORD in the environment before seeding.');
+        }
+
+        User::create([
+            'name' => 'Administrator',
+            'email' => config('company.admin.email'),
+            'password' => $password,
+        ]);
+
+        TeamMember::create([
+            'name' => config('company.owner'),
+            'role' => 'Founder & Managing Director',
+            'sort_order' => 1,
+            'is_active' => true,
+        ]);
 
         foreach ($this->services() as $i => $service) {
-            Service::updateOrCreate(
-                ['slug' => Str::slug($service['title'])],
-                $service + ['sort_order' => $i + 1, 'is_active' => true]
-            );
+            Service::create($service + [
+                'slug' => Str::slug($service['title']),
+                'sort_order' => $i + 1,
+                'is_active' => true,
+            ]);
         }
     }
 

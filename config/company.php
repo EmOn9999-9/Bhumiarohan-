@@ -32,6 +32,12 @@ return [
         'whatsapp' => env('COMPANY_WHATSAPP', ''),
     ],
 
+    // First admin account, created by the database seeder on an empty database.
+    'admin' => [
+        'email' => env('ADMIN_EMAIL', 'admin@bhumiarohan.com'),
+        'password' => env('ADMIN_PASSWORD'),
+    ],
+
     // Email address that receives contact-form messages (defaults to the company email).
     'inquiry_notify' => env('COMPANY_INQUIRY_NOTIFY', 'bhumiarohan.engg@gmail.com'),
 ];

@@ -176,13 +176,52 @@ tests/Feature/               # Feature tests
 php artisan test
 ```
 
-## Deployment notes
+## Deploying to Railway
 
-- Set `APP_ENV=production`, `APP_DEBUG=false` and the correct `APP_URL` in `.env`
-- Run `composer install --no-dev --optimize-autoloader` and `npm run build`
-- Run `php artisan migrate --force`, `php artisan storage:link` and `php artisan optimize`
-- Point the web server's document root at the `public/` folder
-- Never commit `.env`: it contains the admin and email passwords
+The site deploys from this GitHub repository to [Railway](https://railway.com). Every push to `main` builds and redeploys it automatically. The included `Dockerfile` and `railway.json` handle the build. On each start, `docker/start.sh` runs the migrations, seeds the database only if it's empty, and caches the config.
+
+### 1. Create the service
+1. Sign in at [railway.com](https://railway.com) with GitHub.
+2. **New Project** → **Deploy from GitHub repo** → choose this repository.
+   Railway detects the `Dockerfile` and starts the first build. It's fine if that build fails; finish steps 2–3 first.
+
+### 2. Add a volume (keeps the database and uploaded photos)
+In the service, open the **⋮ menu → Attach Volume** (or right-click the service → *Attach Volume*) and set the **mount path** to:
+```
+/app/storage
+```
+> Without the volume, every redeploy would wipe the database, the admin login, inquiries and uploaded photos.
+
+### 3. Set the variables
+In the service's **Variables** tab → **Raw Editor**, paste and fill in:
+
+```env
+APP_NAME="Bhumi Arohan"
+APP_KEY=                          # run `php artisan key:generate --show` locally and paste the result
+APP_URL=https://your-app.up.railway.app   # your Railway (or custom) domain, with https
+
+ADMIN_EMAIL=admin@bhumiarohan.com
+ADMIN_PASSWORD=                   # strong password for the first admin login
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=bhumiarohan.engg@gmail.com
+MAIL_PASSWORD=                    # Gmail App Password (see "Email notifications")
+MAIL_FROM_ADDRESS=bhumiarohan.engg@gmail.com
+MAIL_FROM_NAME="Bhumi Arohan Website"
+```
+
+`APP_ENV=production`, `APP_DEBUG=false`, logging and the SQLite path are already set in the `Dockerfile`.
+
+### 4. Get the link
+**Settings → Networking → Generate Domain** gives a free `*.up.railway.app` address. Put that address in `APP_URL`; Railway redeploys automatically. To use your own domain (e.g. `bhumiarohan.com.np`), choose **Custom Domain** and add the DNS record Railway shows.
+
+### Notes
+- `ADMIN_PASSWORD` is only used to create the **first** admin account. Later redeploys never change the password or overwrite content edited in the admin panel; change the password from the admin panel itself.
+- Health check: `/up`. Logs: the service's **Deployments → View logs**.
+- To test the production image locally: `docker build -t bhumiarohan .` and then `docker run -p 8080:8080 -e APP_KEY=... -e ADMIN_PASSWORD=... bhumiarohan`.
+- Never commit `.env`: it contains the admin and email passwords.
 
 ## License
 
