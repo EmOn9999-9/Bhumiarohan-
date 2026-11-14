@@ -1,6 +1,16 @@
 <x-layouts.app title="Projects">
     <x-page-header title="Our projects" eyebrow="Portfolio">
         A look at the work we've completed and the projects currently underway.
+
+        <x-slot:aside>
+            <div class="flex items-center gap-5 rounded-3xl border border-white/10 bg-white/5 px-7 py-6 backdrop-blur-sm sm:px-9 sm:py-7">
+                <span class="font-display text-6xl font-extrabold leading-none text-accent-400 sm:text-7xl">{{ config('company.projects_count') }}</span>
+                <span class="border-l border-white/15 pl-5">
+                    <span class="block font-display text-2xl font-bold text-white sm:text-3xl">Projects</span>
+                    <span class="mt-1 block text-sm text-slate-300">delivered &amp; underway</span>
+                </span>
+            </div>
+        </x-slot:aside>
     </x-page-header>
 
     <section class="section">
@@ -8,8 +18,8 @@
             @if ($projects->isEmpty())
                 <div class="mx-auto max-w-md py-12 text-center">
                     <span class="mx-auto grid size-14 place-items-center rounded-full bg-slate-100 text-slate-400"><x-icon name="building" class="size-7" /></span>
-                    <h2 class="mt-5 text-xl font-bold">Projects coming soon</h2>
-                    <p class="mt-2 text-slate-600">We're a new company and our project portfolio is being prepared. Want to be one of our first clients?</p>
+                    <h2 class="mt-5 text-xl font-bold">Project gallery coming soon</h2>
+                    <p class="mt-2 text-slate-600">We're adding photos and details of our {{ config('company.projects_count') }} projects. Have a project in mind? Let's talk.</p>
                     <a href="{{ route('contact') }}" class="btn btn-primary mt-6">Start your project</a>
                 </div>
             @else

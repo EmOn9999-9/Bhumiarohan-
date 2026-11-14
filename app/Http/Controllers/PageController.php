@@ -26,7 +26,9 @@ class PageController extends Controller
 
     public function team()
     {
-        return view('pages.team', ['team' => TeamMember::active()->get()]);
+        [$founders, $members] = TeamMember::active()->get()->partition->is_founder;
+
+        return view('pages.team', ['founders' => $founders, 'members' => $members]);
     }
 
     public function converter()

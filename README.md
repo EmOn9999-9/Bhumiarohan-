@@ -178,7 +178,7 @@ php artisan test
 
 ## Deploying to Railway
 
-The site deploys from this GitHub repository to [Railway](https://railway.com). Every push to `main` builds and redeploys it automatically. The included `Dockerfile` and `railway.json` handle the build. On each start, `docker/start.sh` runs the migrations, seeds the database only if it's empty, and caches the config.
+The site deploys from this GitHub repository to [Railway](https://railway.com). Every push to `main` builds and redeploys it automatically. Railway finds the included `Dockerfile` and builds from it on its own. On each start, `docker/start.sh` runs the migrations, seeds the database only if it's empty, and caches the config.
 
 ### 1. Create the service
 1. Sign in at [railway.com](https://railway.com) with GitHub.
@@ -217,9 +217,20 @@ MAIL_FROM_NAME="Bhumi Arohan Website"
 ### 4. Get the link
 **Settings → Networking → Generate Domain** gives a free `*.up.railway.app` address. Put that address in `APP_URL`; Railway redeploys automatically. To use your own domain (e.g. `bhumiarohan.com.np`), choose **Custom Domain** and add the DNS record Railway shows.
 
+### 5. Health check and restarts
+In the service's **Settings → Deploy**, set:
+
+| Setting | Value |
+|---|---|
+| Healthcheck Path | `/up` |
+| Healthcheck Timeout | `180` seconds |
+| Restart Policy | **On Failure**, max retries `5` |
+
+With the health check set, Railway only switches traffic to a new deploy once it responds. If a deploy fails, the previous version stays live.
+
 ### Notes
 - `ADMIN_PASSWORD` is only used to create the **first** admin account. Later redeploys never change the password or overwrite content edited in the admin panel; change the password from the admin panel itself.
-- Health check: `/up`. Logs: the service's **Deployments → View logs**.
+- Logs: the service's **Deployments → View logs**, or `railway logs` with the [Railway CLI](https://docs.railway.com/guides/cli).
 - To test the production image locally: `docker build -t bhumiarohan .` and then `docker run -p 8080:8080 -e APP_KEY=... -e ADMIN_PASSWORD=... bhumiarohan`.
 - Never commit `.env`: it contains the admin and email passwords.
 

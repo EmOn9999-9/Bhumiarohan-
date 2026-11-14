@@ -51,7 +51,8 @@ class TeamMemberController extends Controller
             'name' => ['required', 'string', 'max:120'],
             'role' => ['required', 'string', 'max:120'],
             'qualification' => ['nullable', 'string', 'max:200'],
-            'bio' => ['nullable', 'string', 'max:2000'],
+            'bio' => ['nullable', 'string', 'max:5000'],
+            'quote' => ['nullable', 'string', 'max:600'],
             'email' => ['nullable', 'email', 'max:150'],
             'phone' => ['nullable', 'string', 'max:30'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
@@ -60,6 +61,7 @@ class TeamMemberController extends Controller
 
         $data['sort_order'] = $data['sort_order'] ?? 0;
         $data['is_active'] = $request->boolean('is_active');
+        $data['is_founder'] = $request->boolean('is_founder');
         $data['photo'] = $this->storeImage($request, 'photo', 'team', $member?->photo);
 
         return $data;

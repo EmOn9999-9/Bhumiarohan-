@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class TeamMember extends Model
 {
     protected $fillable = [
-        'name', 'role', 'qualification', 'bio', 'photo', 'email', 'phone', 'sort_order', 'is_active',
+        'name', 'role', 'qualification', 'bio', 'quote', 'photo', 'email', 'phone', 'sort_order', 'is_active', 'is_founder',
     ];
 
     protected function casts(): array
     {
-        return ['is_active' => 'boolean'];
+        return ['is_active' => 'boolean', 'is_founder' => 'boolean'];
     }
 
     public function scopeActive($query)

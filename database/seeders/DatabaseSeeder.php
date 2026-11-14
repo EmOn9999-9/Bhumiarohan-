@@ -33,11 +33,16 @@ class DatabaseSeeder extends Seeder
             'password' => $password,
         ]);
 
+        $founder = config('company.founder');
         TeamMember::create([
             'name' => config('company.owner'),
-            'role' => 'Founder & Managing Director',
+            'role' => $founder['role'],
+            'qualification' => $founder['qualification'],
+            'bio' => $founder['bio'],
+            'quote' => $founder['quote'],
             'sort_order' => 1,
             'is_active' => true,
+            'is_founder' => true,
         ]);
 
         foreach ($this->services() as $i => $service) {

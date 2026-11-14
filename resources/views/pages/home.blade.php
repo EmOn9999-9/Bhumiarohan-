@@ -1,9 +1,13 @@
 <x-layouts.app>
     {{-- Hero --}}
     <section class="relative overflow-hidden bg-brand-950">
-        <div class="pattern-grid absolute inset-0" aria-hidden="true"></div>
-        <div class="absolute -right-40 top-10 size-[32rem] rounded-full bg-brand-600/25 blur-3xl" aria-hidden="true"></div>
-        <div class="absolute -bottom-40 -left-20 size-96 rounded-full bg-accent-500/10 blur-3xl" aria-hidden="true"></div>
+        <img src="{{ asset('images/hero-construction.jpg') }}"
+             srcset="{{ asset('images/hero-construction-960.jpg') }} 960w, {{ asset('images/hero-construction.jpg') }} 1920w"
+             sizes="100vw" alt="" fetchpriority="high" decoding="async"
+             class="hero-bg absolute inset-0 size-full object-cover object-[70%_center]" aria-hidden="true">
+        {{-- Overlay keeps the text readable: strongest on the text side, lighter where the cranes are. --}}
+        <div class="absolute inset-0 bg-linear-to-r from-brand-950/95 via-brand-950/80 to-brand-950/55 lg:via-brand-950/70 lg:to-brand-950/20" aria-hidden="true"></div>
+        <div class="absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-brand-950/70 to-transparent" aria-hidden="true"></div>
 
         <div class="container-x relative grid items-center gap-12 pt-32 pb-20 sm:pt-40 lg:grid-cols-12 lg:pb-28">
             <div class="lg:col-span-7">

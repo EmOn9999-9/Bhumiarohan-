@@ -28,7 +28,7 @@ class DatabaseSeederTest extends TestCase
         $this->assertSame('admin@example.com', $admin->email);
         $this->assertTrue(Hash::check('first-password', $admin->password));
         $this->assertSame(8, Service::count());
-        $this->assertSame('Rohan Sharma Poudel', TeamMember::sole()->name);
+        $this->assertSame('Rohan Sharma Paudel', TeamMember::sole()->name);
     }
 
     public function test_running_it_again_keeps_admin_panel_changes(): void
