@@ -22,7 +22,9 @@ class TeamMember extends Model
 
     public function getInitialsAttribute(): string
     {
-        return collect(explode(' ', $this->name))->filter()->take(2)
+        return collect(explode(' ', $this->name))
+            ->filter(fn ($part) => $part !== '' && ! str_ends_with($part, '.'))
+            ->take(2)
             ->map(fn ($p) => mb_strtoupper(mb_substr($p, 0, 1)))->implode('');
     }
 }

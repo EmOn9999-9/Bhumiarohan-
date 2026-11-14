@@ -7,7 +7,7 @@
 
 return [
     'name' => 'Bhumi Arohan',
-    'owner' => 'Rohan Sharma Paudel',
+    'owner' => 'Er. Rohan Sharma Paudel',
 
     /*
      * Number of projects shown as a headline on the Projects page (e.g. "20+").
@@ -16,12 +16,12 @@ return [
 
     /*
     | Founder profile used to create the founder's team entry. After that, edit it
-    | in the admin panel (Team → Rohan Sharma Paudel).
+    | in the admin panel (Team → Er. Rohan Sharma Paudel).
     */
     'founder' => [
         'role' => 'Founder & Managing Director',
         'qualification' => 'Civil Engineer',
-        'bio' => "Rohan Sharma Paudel is a civil engineer and the founder and Managing Director of Bhumi Arohan Engineering & Construction Pvt. Ltd. He leads the company's engineering and construction work, from site survey and structural design to supervision on site and final handover.\n\n"
+        'bio' => "Er. Rohan Sharma Paudel is a civil engineer and the founder and Managing Director of Bhumi Arohan Engineering & Construction Pvt. Ltd. He leads the company's engineering and construction work, from site survey and structural design to supervision on site and final handover.\n\n"
             ."Based in Chitwan, Rohan started Bhumi Arohan with a clear goal: to give families, businesses and communities in Nepal a construction partner they can trust. He believes every structure, from a family home to public infrastructure, should be safe, earthquake-resistant, built to the National Building Code and delivered with complete transparency in cost and time.\n\n"
             .'Under his leadership, Bhumi Arohan brings design and consulting, survey and lab testing, construction, renovation, interiors, real estate and engineering resources supply under one roof, so every client works with one accountable team from the first drawing to the final key.',
         'quote' => 'Our promise is simple: build every structure as if our own family will live in it. With honest engineering, transparent costs and respect for every rupee our clients invest, we build spaces, create value and elevate lives.',

@@ -13,7 +13,7 @@ class PublicPagesTest extends TestCase
     public function test_team_page_shows_the_founder_section_above_the_team_cards(): void
     {
         TeamMember::create([
-            'name' => 'Rohan Sharma Paudel',
+            'name' => 'Er. Rohan Sharma Paudel',
             'role' => 'Founder & Managing Director',
             'qualification' => 'Civil Engineer',
             'bio' => "First paragraph.\n\nSecond paragraph.",
@@ -26,7 +26,8 @@ class PublicPagesTest extends TestCase
         $this->get(route('team'))
             ->assertOk()
             ->assertSeeInOrder([
-                'Rohan Sharma Paudel',
+                'RS',
+                'Er. Rohan Sharma Paudel',
                 'Civil Engineer',
                 '<p>First paragraph.</p>',
                 '<p>Second paragraph.</p>',
